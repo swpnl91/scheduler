@@ -16,6 +16,7 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
 
 storiesOf("Button", module)
   .addParameters({
@@ -159,6 +160,9 @@ storiesOf("InterviewerList", module)
   ))
   .add("Confirm", () => (
     <Confirm message={"Are you sure you want to delete the appointment?"} onConfirm={action("onConfirm worked!")} onCancel={action("onCancel worked!")} />
+  ))
+  .add("Status Check", () => (
+    <Status message={"Deleting..."} />
   ));
 
 
