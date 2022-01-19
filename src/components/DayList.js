@@ -3,7 +3,7 @@ import DayListItem from './DayListItem';
 
 export default function DayList(props) {
   
-  const { days, onChange, value  } = props;
+  const { days, value, onChange  } = props;
 
   const parsedDaysArray = days.map((elm) => {
     if (value === elm.name) {
