@@ -14,6 +14,7 @@ import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
 
 storiesOf("Button", module)
   .addParameters({
@@ -151,6 +152,9 @@ storiesOf("InterviewerList", module)
   ))
   .add("Empty Add Button", () => (
     <Empty onAdd={action("onAdd executed")} />
+  ))
+  .add("Show Buttons Check (delete and edit) and Styling", () => (
+    <Show interviewer={interviewer} student={"Lydia Miller-Jones"} onEdit={action("onEdit")} onDelete={action("onDelete")} />
   ));
 
 
