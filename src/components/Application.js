@@ -1,37 +1,33 @@
-import React, { useState } from "react";
-
+import React from 'react';
+import useApplicationData from "hooks/useApplicationData";
 import "components/Application.scss";
-import DayList from './DayList';
-
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
-
+import DayList from "./DayList";
+import Appointment from "./Appointment";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
+  const {
+    state,
+    setSelectedDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
+  
+  
+  const dailyAppointments = getAppointmentsForDay(state, state.selectedDay);
+  const dailyInterviewers = getInterviewersForDay(state, state.selectedDay);
+  
+  
+  const parsedAppointments = dailyAppointments.map(appts => {
+    const interview = getInterview(state, appts.interview);
+    return <Appointment cancelInterview={cancelInterview} bookInterview={bookInterview} key={appts.id} id={appts.id} interview={interview} time={appts.time} dailyInterviewers={dailyInterviewers} />
+  });
+  parsedAppointments.push(<Appointment key="last" time="5pm" />);
 
-
-  const [day, setDay] = useState("Monday");
-
+  
   return (
     <main className="layout">
       <section className="sidebar">
-      
       <img
         className="sidebar--centered"
         src="images/logo.png"
@@ -40,9 +36,9 @@ export default function Application(props) {
       <hr className="sidebar__separator sidebar--centered" />
       <nav className="sidebar__menu">
         <DayList
-          days={days}
-          value={day}
-          onChange={setDay}
+          days={state.days}
+          value={state.selectedDay}
+          onChange={setSelectedDay}
         />
       </nav>
       <img
@@ -50,10 +46,9 @@ export default function Application(props) {
         src="images/lhl.png"
         alt="Lighthouse Labs"
       />
-
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {parsedAppointments}
       </section>
     </main>
   );
